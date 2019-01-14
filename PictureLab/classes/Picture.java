@@ -10,7 +10,7 @@ import java.util.List; // resolves problem with java.awt.List and java.util.List
  * A class that represents a picture.  This class inherits from 
  * SimplePicture and allows the student to add functionality to
  * the Picture class.  
- * 
+ *  
  * @author Barbara Ericson ericson@cc.gatech.edu
  */
 public class Picture extends SimplePicture 
@@ -96,6 +96,33 @@ public class Picture extends SimplePicture
         pixelObj.setBlue(0);
       }
     }
+  }
+  
+  public void keepOnlyBlue()
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      for (Pixel[] rowArray: pixels)
+      {
+          for (Pixel pix : rowArray)
+          {
+              pix.setGreen(0);
+              pix.setRed(0);
+          }
+      }
+  }
+  
+  public void negate()
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      for (Pixel[] rowArray: pixels)
+      {
+          for (Pixel pix : rowArray)
+          {
+              pix.setBlue(255 - pix.getBlue());
+              pix.setGreen(255 - pix.getGreen());
+              pix.setRed(255 - pix.getRed());
+          }
+      }
   }
   
   /** Method that mirrors the picture around a 
