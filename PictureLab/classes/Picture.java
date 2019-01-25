@@ -63,7 +63,7 @@ public class Picture extends SimplePicture
     /**
      * Constructor that takes a buffered image
      * @param image the buffered image to use
-     */
+     */ 
     public Picture(BufferedImage image)
     {
         super(image);
@@ -357,12 +357,40 @@ public class Picture extends SimplePicture
         }
     }
     
+    public void zoomOut(Picture inp, int degree)
+    {
+        Pixel pixels[][] = this.getPixels2D();
+        Pixel source[][] = inp.getPixels2D();
+        for (int i = 0; i < source.length / degree; i++)
+        {
+            for (int j = 0; j < source[0].length / degree; j++)
+            {
+                int sumRed = 0, sumBlue = 0, sumGreen = 0;
+                
+                for (int k = 0; k < degree; k++)
+                {
+                    for (int l = 0; l < degree; l++)
+                    {
+                        sumRed += source[degree * i + k][degree * j + l].getRed();
+                        sumGreen += source[degree * i + k][degree * j + l].getGreen();
+                        sumBlue += source[degree * i + k][degree * j + l].getBlue();
+                    }
+                }
+                
+                pixels[i][j].setRed((int)(sumRed / (degree * degree)));
+                pixels[i][j].setGreen((int)(sumGreen / (degree * degree)));
+                pixels[i][j].getBlue((int)(sumBlue / (degree * degree)));
+            }
+        }
+    }
+    
     /* Main method for testing - each class in Java can have a main 
     * method 
      */
     public static void main(String[] args) 
     {
         Picture beach = new Picture("beach.jpg");
+        beach.zoomOut(beach, 2);
         beach.sepia();
         beach.explore();
         Picture beach2 = new Picture(beach);
